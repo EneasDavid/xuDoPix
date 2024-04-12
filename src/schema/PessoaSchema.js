@@ -6,7 +6,7 @@ const pessoaSchema = new mongoose.Schema ({
     nome: { type: String, required: true },
     senha: { type: String, required: true },
     saldoNegativo: { type: Double },
-    saldoPossitivo: { type: Double }
+    saldoPositivo: { type: Double }
 }, { versionKey: false });
 
 const pessoa = mongoose.model("pessoas", pessoaSchema);
