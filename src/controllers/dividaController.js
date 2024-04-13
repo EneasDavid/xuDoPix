@@ -1,6 +1,5 @@
 import Pessoa from "../models/PessoaSchema.js";
 import Divida from "../models/DividaSchema.js";
-import divida from "../models/DividaSchema.js";
 
 class DividaController{
     static async criarDivida(req,res){
