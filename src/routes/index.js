@@ -1,10 +1,9 @@
 import express from "express";
-import pessoas from "./pessoasRoutes.js";//Esse "livros" é um Alias( apelido ) que estamos chamando o routes lá do livrosRoutes.JS
+import pessoas from "./pessoasRoutes.js";
 
-//Criando um "Barril" que vai juntar a rota do livro com a rota "geral" = "/"
 
 const routes = (app) => {
-    app.route("/").get((req, res) => res.status(200).send("Curso de Node.js"));
+    app.route("/").get((req, res) => res.status(200).send(asciiArt));
     app.use(express.json(), pessoas);
 };
 
