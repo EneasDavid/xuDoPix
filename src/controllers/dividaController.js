@@ -7,7 +7,7 @@ class DividaController{
             const novaDivida = await Divida.create(req.body);
             res.status(201).json({message: "Divida criada com sucesso", divida: novaDivida});
         }catch(erro){
-            res.status(500).json({message: `$ {erro.message} - Falha ao crirar divida`});
+            res.status(500).json({message: `${erro.message} - Falha ao crirar divida`});
         }
     }
 
