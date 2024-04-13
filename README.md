@@ -32,6 +32,11 @@ Este projeto tem como objetivo a construção de um sistema de gestão de divida
 ```
 git clone https://github.com/EneasDavid/xuDoPix
 ```
+npm install
+```
+> - O gitIgnore faz com que a pasta "node_modules" não seja instalada automaticamente
+
+```
 > - Clonar o repositorio
 ```
 npm run dev
