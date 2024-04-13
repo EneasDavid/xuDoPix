@@ -17,7 +17,7 @@ class DividaController{
             const dividas = await Divida.fin({ pessoa: id});
             res.status(200).json(dividas);
         }catch(erro){   
-            res.status(500).json({message: `$ {erro.message} - Falha na listagem de dividas`}); 
+            res.status(500).json({message: `${erro.message} - Falha na listagem de dividas`}); 
         }
     }
 
@@ -27,7 +27,7 @@ class DividaController{
             await Divida.findByIdAndUpdate(id, req.body);
             res.status(200).json({message: "Divida atualizada"});
         }catch(erro){
-            res.status(500).json({message: `$ {erro.message} - Erro ao atualizar divida`}); 
+            res.status(500).json({message: `${erro.message} - Erro ao atualizar divida`}); 
         }
     }
 
@@ -37,7 +37,7 @@ class DividaController{
             await Divida.findByIdAndDelete(id);
             res.status(200).json({message: "Divida deletada"});
         }catch(erro){
-            res.status(500).json({message: `$ {erro.message} - Falha na listagem de dividas`}); 
+            res.status(500).json({message: `${erro.message} - Falha na listagem de dividas`}); 
         }
     }
 
