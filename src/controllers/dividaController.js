@@ -1,5 +1,6 @@
 import Pessoa from "../models/PessoaSchema.js";
 import Divida from "../models/DividaSchema.js";
+import divida from "../models/DividaSchema.js";
 
 class DividaController{
     static async criarDivida(req,res){
@@ -32,8 +33,16 @@ class DividaController{
 
     static async atualizarDivida(req,res){
         try{
-            const id = req.paras.id;
-            await Divida.findByIdAndUpdate(id, req.body);
+            const id = req.params.id;
+            const novoValor = req.body.valor;
+            const divida = await Divida.findById(id);
+    
+            divida.valor += novoValor;
+            await divida.save();
+    
+            await Pessoa.findByIdAndUpdate(divida.devedor, { $inc: { saldoNegativo: novoValor } });
+            await Pessoa.findByIdAndUpdate(divida.fiador, { $inc: { saldoPositivo: novoValor } });
+    
             res.status(200).json({message: "Divida atualizada"});
         }catch(erro){
             res.status(500).json({message: `${erro.message} - Erro ao atualizar divida`}); 
