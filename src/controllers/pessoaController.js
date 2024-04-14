@@ -1,4 +1,4 @@
-import Pessoa from '../models/PessoaSchema.js'
+import Pessoa from '../schemas/PessoaSchema.js'
 
 class PessoaController{
     static async criarPessoa(req,res){
@@ -14,7 +14,6 @@ class PessoaController{
         try{
             const geral = await Pessoa.find({});
             res.status(200).json(geral); 
-
         }catch(erro){
             res.status(500).json({message: `${erro.message} - Não foi pssível listar os usuários`});
         }
@@ -39,14 +38,30 @@ class PessoaController{
             res.status(500).json({message: `${erro.message} - Erro ao efeturar atualização`});
         }
     }
+    /*
+    @description: Método para deletar uma pessoa atraves do ID
+                verificando se a pessoa existe e se ela possui dividas ativas
+                caso a pessoa exista e não possua dividas ativas, deleta-se a pessoa
+    @endpoint: /pessoa/:id
+    @method: DELETE
+    @params: id
+    @return: mensagem de sucesso ou erro
+    */
 
-    static async deletarPessoa(req,res){
-        try{
-            const id = req.params.id;
+    static async deletarPessoa(req, res) {
+        try {
+            const id=req.params.id;
+            const pessoa=await Pessoa.findById(id);
+            if (!pessoa) return res.status(404).json({ message: "Pessoa não encontrada" });
+            const dividasAtivas=await Divida.exists({ pessoa: id, status: false });
+            if (dividasAtivas) return res.status(400).json({ message: "Você ainda tem dívidas ativas" });
+            await Divida.deleteMany({ pessoa: id });
             await Pessoa.findByIdAndDelete(id);
-            res.status(200).json({message: "Usuário deletado"});
-        }catch(erro){
-            res.status(500).json({message: `${erro.message} - Erro ao deletar usuário`});
+            res.status(200).json({ message: "Usuário deletado" });
+        } catch (error) {
+            res.status(500).json({ message: `${error.message} - Erro ao deletar usuário` });
         }
-    }
+    }    
 }
+
+export default PessoaController;

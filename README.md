@@ -29,19 +29,15 @@ Este projeto tem como objetivo a construção de um sistema de gestão de divida
 
 ### Como Contribuir
 > - Se você deseja contribuir para este projeto, siga os passos abaixo:
+
 ```
 git clone https://github.com/EneasDavid/xuDoPix
 ```
-npm install
-```
-> - O gitIgnore faz com que a pasta "node_modules" não seja instalada automaticamente
-
-```
 > - Clonar o repositorio
 ```
-npm run dev
+npm install dotenv
 ```
-> - ligar o servidor
+> - baixar extensão para que a conexão com o banco seja feita de forma correta
 ```
 npm install mongodb
 ```
@@ -50,3 +46,11 @@ npm install mongodb
 npm install mongoose
 ```
 > - instalar o mongoose
+```
+npm install
+```
+> - O gitIgnore faz com que a pasta "node_modules" não seja instalada automaticamente
+```
+npm run dev
+```
+> - ligar o servidor

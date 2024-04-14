@@ -1,9 +1,12 @@
 import express from "express";
-import pessoaController from "../controllers/pessoaController.js";
+import PessoaController from "../controllers/pessoaController.js";
 
 const routes = express.Router();
-routes.get("/pessoa", pessoaController.listarpessoa);
-routes.get("/pessoa/:id", pessoaController.listarpessoaPorId);
-routes.post("/pessoa", pessoaController.cadastrarpessoa);
-routes.put("/pessoa/:id", pessoaController.atualizarpessoa);
+
+routes.get("/pessoa", PessoaController.listarPessoas);
+routes.get("/pessoa/:id", PessoaController.listarPessoaPorId);
+routes.post("/pessoa", PessoaController.criarPessoa);
+routes.put("/pessoa/:id", PessoaController.atualizarPessoa)
+routes.delete("/pessoa/:id", PessoaController.deletarPessoa);
+
 export default routes;
