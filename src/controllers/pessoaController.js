@@ -54,7 +54,7 @@ class PessoaController{
             const pessoa=await Pessoa.findById(id);
             if (!pessoa) return res.status(404).json({ message: "Pessoa não encontrada" });
             const dividasAtivas=await Divida.exists({ pessoa: id, status: false });
-            if (dividasAtivas) return res.status(400).json({ message: "Você ainda tem dívidas ativas" });
+            if (dividasAtivas) return res.status(400).json({ message: "Você tem um valor pendente" });
             await Divida.deleteMany({ pessoa: id });
             await Pessoa.findByIdAndDelete(id);
             res.status(200).json({ message: "Usuário deletado" });
