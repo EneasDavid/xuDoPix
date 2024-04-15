@@ -151,10 +151,11 @@ label {
 }
 
 input {
+    box-sizing: border-box; /* adicionado */
     width: 100%;
-    padding: 7px;
+    padding: 10px 20px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 15px;
     transition: all 300ms ease-in-out;
 }
 
@@ -169,11 +170,12 @@ input:focus-within{
 }
 
 .container button {
+    box-sizing: border-box; /* adicionado */
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 3px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 300ms ease-in-out;
 }
