@@ -17,7 +17,27 @@
 </head>
 <body>
     <div class="background-image"></div>
-
-    <h1>Aqui vai o formulario de cadastro</h1>
+    <div class="cadastro-container">
+        <div class="cadastro-tilte-container">
+            <i class="fas fa-edit main-logo-icon"></i>
+            <h1>Cadastro</h1>
+        </div>
+    <form action="#" method="POST">
+        <div class="input-group">
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="Insira no formato - 123.456.789-00">
+        </div>
+        <div class="input-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required placeholder="Seu nome aqui">
+        </div>
+        <div class="input-group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required minlength="6" placeholder="Pelo menos 6 caracteres">
+        </div>
+        <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+    
 </body>
 </html>
