@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./public/style/style.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>login</h1>
+        <form action="#">
+            <div class="input-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" required placeholder="Insira aqui o CPF">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required placeholder="Insira aqui a senha">
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="links">
+            <button onclick="redirect('cadastro.html')">Não tem uma conta?</button>
+        </div>
+    </div>
+<script>
+    function redirect(url){
+        window.location.href = url;
+    }
+</script>
+</body>
+</html>
