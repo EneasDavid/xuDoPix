@@ -1,8 +1,3 @@
-//import Pessoa from "../models/PessoaSchema.js";
-/*Creio fortemente que não seja necessário importar o model de pessoa, 
-pois a divida não tem qualquer sobreposição a pessoa
-pessoa que se sobrepoe a divida, atraves do cascade a gente vai analizar isso
-*/
 import Divida from "../schemas/DividaSchema.js";
 
 class DividaController{
@@ -77,4 +72,3 @@ class DividaController{
     }
     }
 export default DividaController;
-

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css"
+    integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css"
+    integrity="sha512-sVSECYdnRMezwuq5uAjKQJEcu2wybeAPjU4VJQ9pCRcCY4pIpIw4YMHIOQ0CypfwHRvdSPbH++dA3O4Hihm/LQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css"
+    integrity="sha512-tk4nGrLxft4l30r9ETuejLU0a3d7LwMzj0eXjzc16JQj+5U1IeVoCuGLObRDc3+eQMUcEQY1RIDPGvuA7SNQ2w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./public/style/style.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <div class="login-title-container">
+        <i class="fas fa-coins main-logo-icon"></i>
+        <h1>Login</h1>
+        </div>
+       
+        <form action="#" method="GET">
+            <div class="input-group">
+                <label for="username">Usuário:</label>
+                <i class="fas fa-user main-logo-icon"></i>
+                <input type="text" id="username" name="username" required placeholder=" Insira aqui o CPF">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <i class="fas fa-key main-logo-icon"></i>
+                <input type="password" id="password" name="password" required placeholder=" Insira aqui a senha">
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="links">
+            <button onclick="redirect('cadastro.html')">Não tem uma conta?</button>
+        </div>
+    </div>
+<script>
+    function redirect(url){
+        window.location.href = url;
+    }
+</script>
+</body>
+</html>
