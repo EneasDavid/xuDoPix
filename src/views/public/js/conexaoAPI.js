@@ -16,14 +16,37 @@ function mostrarPessoas(pessoas) {
 
     pessoas.forEach(pessoa => {
         const row = document.createElement('tr');
+        
         const nomeCell = document.createElement('td');
         nomeCell.textContent = pessoa.nome;
         row.appendChild(nomeCell);
+        
         const cpfCell = document.createElement('td');
         cpfCell.textContent = pessoa.cpf;
         row.appendChild(cpfCell);
+        
+        const senhaCell = document.createElement('td');
+        senhaCell.textContent = pessoa.senha;
+        row.appendChild(senhaCell);
+        
+        const excluirCell = document.createElement('td');
+        const excluirButton = document.createElement('button');
+        excluirButton.textContent = 'Excluir';
+        excluirButton.addEventListener('click', () => excluirPessoa(pessoa._id));
+        excluirCell.appendChild(excluirButton);
+        row.appendChild(excluirCell);
+        
         tableBody.appendChild(row);
     });
+}
+
+async function excluirPessoa(id) {
+    try {
+        await axios.delete('http://localhost:3000/pessoa/${id}');
+        await listarPessoas();
+    } catch (error) {
+        console.error('Erro ao excluir pessoa:', error);
+    }
 }
 
 listarPessoas();
