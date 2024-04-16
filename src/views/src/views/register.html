@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="./public/style/style.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <header>
+        <div class="header-container">
+            <h1 class="logo"><a href="/src/views/">Xu do Pix</a></h1>
+        </div>
+    </header>
+    <main>
+    <div class="forms-container">
+        <div class="title-container">
+            <h1>Cadastro</h1>
+        </div>
+        <form action="#" method="POST" class="cadastro-form" id="cadastro-form">
+            <div class="input-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="Insira no formato - 123.456.789-00">
+            </div>
+            <div class="input-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required placeholder="Seu nome aqui">
+            </div>
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required minlength="6" placeholder="Pelo menos 6 caracteres">
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./public/js/conexaoAPI.js"></script>
+</body>
+</html>
