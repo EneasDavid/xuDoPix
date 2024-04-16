@@ -77,4 +77,3 @@ class DividaController{
     }
     }
 export default DividaController;
-

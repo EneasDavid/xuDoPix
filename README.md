@@ -51,6 +51,10 @@ npm install
 ```
 > - O gitIgnore faz com que a pasta "node_modules" não seja instalada automaticamente
 ```
+npm install cors
+```
+> - para conectar a API ao front
+```
 npm run dev
 ```
 > - ligar o servidor

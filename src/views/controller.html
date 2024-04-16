@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Pessoas</title>
+    <link rel="stylesheet" href="./public/style/style.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <header>
+        <div class="header-container">
+            <h1 class="logo"><a href="/src/views/">Dashboard</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Login</a></li>
+                    <li><a href="register.html">Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <div id="table-container">
+            <table id="dynamic-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Senha</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody id="pessoas-lista"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./public/js/conexaoAPI.js"></script>
+</body>
+</html>
