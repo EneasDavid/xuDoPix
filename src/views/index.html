@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Pessoas</title>
+    <title>Login</title>
     <link rel="stylesheet" href="./public/style/style.css">
 </head>
 <body>
     <header>
         <div class="header-container">
-            <h1 class="logo"><a href="#">Dashboard</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="home.html">Login</a></li>
-                    <li><a href="cadastro.html">Cadastrar</a></li>
-                </ul>
-            </nav>
+            <h1 class="logo"><a href="/src/views/">Xu do Pix</a></h1>
         </div>
     </header>
-    
     <main>
-        <div id="table-container">
-            <table id="dynamic-table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Senha</th>
-                        <th>Opções</th>
-                    </tr>
-                </thead>
-                <tbody id="pessoas-lista"></tbody>
-            </table>
+        <div class="forms-container">
+            <div class="title-container">
+                <h1>Login</h1>
+            </div>
+            <form action="#" method="POST" class="login-form" id="login-form">
+                <div class="input-group">
+                    <label for="username"><i class="fas fa-user main-logo-icon"></i> CPF:</label>
+                    <input type="text" id="cpf" name="cpf" required placeholder="Insira aqui o CPF">
+                </div>
+                <div class="input-group">
+                    <label for="password"><i class="fas fa-key main-logo-icon"></i> Senha:</label>
+                    <input type="password" id="password" name="password" required placeholder="Insira aqui a senha">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit">Entrar</button>
+                    <div class="links">
+                        <p>Não tem uma conta? <a href="/src/views/register.html">Cadastre-se</a></p>
+                    </div>
+                </div>
+            </form>
         </div>
     </main>
-
     <footer>
         <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
     </footer>
