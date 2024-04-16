@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Debitos</title>
     <link rel="stylesheet" href="/src/views/public/style/style.css">
 </head>
 <body>
@@ -16,7 +16,6 @@
                     <li><a href="./creditoList.html">QUITAR</a></li>
                     <li><a href="./dividasList.html">DEBITOS</a></li>
                     <li><a href="/src/views/">SAIR </a></li>
-
                 </ul>
             </nav>
         </div>
@@ -29,12 +28,12 @@
                     <h2>SUAS DÍVIDAS</h2>
                     <tr>
                         <th>VALOR</th>
-                        <th>CPF</th>
-                        <th>DEVEDOR</th>
+                        <th>PRAZO</th>
+                        <th>SITUAÇÃO</th>
                         <th>CREDOR</th>
                     </tr>
                 </thead>
-                <tbody id="pessoas-lista"></tbody>
+                <tbody id="dividas-lista"></tbody>
             </table>
         </div>
     </main>
@@ -43,21 +42,5 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../public/js/conexaoAPI.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        const idURL = urlParams.get('id');
-        const userData = await mostrarPessoaPorId(idURL);
-        
-        document.getElementById('user-info').innerHTML = `
-                <h2>Dados do Usuário</h2>
-                <p>id: ${userData._id}</p>
-                <p>CPF: ${userData.cpf}</p>
-                <p>Nome: ${userData.nome}</p>
-                <p>Senha: ${userData.senha}</p>
-            `;
-        });      
-    </script>
 </body>
 </html>
