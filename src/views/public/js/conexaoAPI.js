@@ -104,27 +104,35 @@ class Controller {
         });
     }
 
-    static async cadastrarDivida() {
-       const id=obterIdUsuario;
-        document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
-            event.preventDefault();     
-            const formData = new FormData(document.getElementById('cadastro-divida-form'));
-            const data = {
-                devedor: formData.get('devedor'),
-                fiador: id,
-                valor: parseFloat(formData.get('valor')),
-                status: 'false', 
-            };
-            try {
-                const novaDivida = new Divida(data);
-                await novaDivida.save();
-                window.location.href = "/src/views/dashboard.html";
-            } catch (error) {
-                console.error('Erro ao cadastrar dívida:', error);
-                alert('Erro ao cadastrar dívida. Por favor, tente novamente mais tarde.');
-            }
-        });
-    }
+static async cadastrarDivida() {
+    const idUsuario = localStorage.getItem('id');
+    let devedorId = null;
+
+    document.getElementById('devedor').addEventListener('change', (event) => {
+        devedorId = event.target.value;
+    });
+
+    document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(document.getElementById('cadastro-divida-form'));
+        const data = {
+            id_devedor: devedorId,
+            id_fiador: idUsuario,
+            valor:  parseFloat(formData.get('valor')),
+            prazo: formData.get('prazo'),
+            status: 'false', 
+            dataCriacao:new Date(),
+        };
+        console.log(data);
+        try {
+            await axios.post('http://localhost:3000/divida', data);
+            window.location.href = "/src/views/afterLogin/dashboard.html";
+        } catch (error) {
+            console.error('Erro ao cadastrar dívida:', error);
+            alert('Erro ao cadastrar dívida. Por favor, tente novamente mais tarde.');
+        }
+    });
+    }    
 
     static async excluirPessoa(id) {
         try {
@@ -392,7 +400,7 @@ class Controller {
         try {
           const response = await axios.get('http://localhost:3000/pessoa');
           const pessoas = response.data;
-          const dropdown = document.getElementById('dropdown');
+          const dropdown = document.getElementById('devedor');
           dropdown.innerHTML = '<option value="">Selecione um usuário</option>';
           pessoas.forEach(pessoa => {
             if(pessoa._id!=idUsuario){
@@ -406,7 +414,7 @@ class Controller {
           console.error('Erro ao listar pessoas:', error);
           throw error;
         }
-      }
+    }
 
     static async afterLogin() {
         const idUsuario = localStorage.getItem('id');
@@ -477,6 +485,7 @@ class Controller {
 document.addEventListener('DOMContentLoaded', () => {
     Controller.fazerLogin();
     Controller.cadastrarPessoa();
+    Controller.cadastrarDivida();
     Controller.editarPessoa();
     Controller.mostrarPessoas();
     Controller.mostrarTodosCreditos();

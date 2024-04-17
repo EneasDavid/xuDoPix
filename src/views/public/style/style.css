@@ -254,25 +254,25 @@ footer {
 }
   
   /* Estilizando as opções do dropdown */
-  #dropdown option {
+  #devedor option {
     background-color: #fff;
     color: #333;
   }
   
   /* Estilizando o dropdown quando estiver aberto */
-  #dropdown:focus {
+  #devedor:focus {
     outline: none;
     border-color: #999;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
   
   /* Estilizando as opções do dropdown quando estiver aberto */
-  #dropdown:focus option {
+  #devedor:focus option {
     background-color: #f0f0f0;
   }
   
   /* Estilizando as opções do dropdown ao passar o mouse */
-  #dropdown option:hover {
+  #devedor option:hover {
     background-color: #e0e0e0;
   }
   

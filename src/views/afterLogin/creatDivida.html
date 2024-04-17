@@ -46,20 +46,20 @@
             <form action="#" method="POST" class="cadastro-divida-form" id="cadastro-divida-form">
                 <div class="input-group">
                     <label for="valor">Valor da Dívida:</label>
-                    <input type="number" id="valor" required placeholder="Insira o valor da dívida">
+                    <input type="number" id="valor" name="valor" required placeholder="Insira o valor da dívida" step=".01">
                 </div>
                 <div class="input-group">
                     <label>Devedor:</label>
-                    <select id="dropdown">
+                    <select id="devedor">
                         <option value="">Selecione um usuário</option>
                     </select>                   
                 </div>
                 <div class="input-group">
-                    <label>Prazo de Pagamento:</label>
+                    <label for="prazo">Prazo de Pagamento:</label>
                     <input type="date" id="prazo" name="prazo" required placeholder="Insira a data">
                 </div>
+                <button type="submit">ENVIAR</button>
             </form>
-            <button type="submit">ENVIAR</button>
         </div>
     </main>
     <footer>
