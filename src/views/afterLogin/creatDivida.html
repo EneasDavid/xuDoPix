@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debitos</title>
+    <title>Criar divida</title>
     <link rel="stylesheet" href="/src/views/public/style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css"
     integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A=="
@@ -39,22 +39,27 @@
                 <p id="saldo-positivo"></p>
                 <p id="saldo-negativo"></p>
                 <button id="editar">EDITAR</button>
-
             </div>
         </div>
-            <div id="table-container">
-            <table id="dynamic-table">
-                <thead>
-                    <h2>SUAS DÍVIDAS</h2>
-                    <tr>
-                        <th>VALOR</th>
-                        <th>PRAZO</th>
-                        <th>SITUAÇÃO</th>
-                        <th>CREDOR</th>
-                    </tr>
-                </thead>
-                <tbody id="todos-os-debito-lista"></tbody>
-            </table>
+        <div class="forms-container">
+            <div class="title-container"><h2>CADASTRAR NOVA DIVIDA</h2></div>
+            <form action="#" method="POST" class="cadastro-divida-form" id="cadastro-divida-form">
+                <div class="input-group">
+                    <label for="valor">Valor da Dívida:</label>
+                    <input type="number" id="valor" required placeholder="Insira o valor da dívida">
+                </div>
+                <div class="input-group">
+                    <label>Devedor:</label>
+                    <select id="dropdown">
+                        <option value="">Selecione um usuário</option>
+                    </select>                   
+                </div>
+                <div class="input-group">
+                    <label>Prazo de Pagamento:</label>
+                    <input type="date" id="prazo" name="prazo" required placeholder="Insira a data">
+                </div>
+            </form>
+            <button type="submit">ENVIAR</button>
         </div>
     </main>
     <footer>

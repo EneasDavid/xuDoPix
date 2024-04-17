@@ -106,9 +106,9 @@ class Controller {
 
     static async cadastrarDivida() {
        const id=obterIdUsuario;
-        document.getElementById('cadastro-form').addEventListener('submit', async (event) => {
+        document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
             event.preventDefault();     
-            const formData = new FormData(document.getElementById('cadastro-form'));
+            const formData = new FormData(document.getElementById('cadastro-divida-form'));
             const data = {
                 devedor: formData.get('devedor'),
                 fiador: id,
@@ -387,6 +387,24 @@ class Controller {
         });
     }
     
+    static async listarPessoasDropDawn() {
+        try {
+          const response = await axios.get('http://localhost:3000/pessoa');
+          const pessoas = response.data;
+          const dropdown = document.getElementById('dropdown');
+          dropdown.innerHTML = '<option value="">Selecione um usuário</option>';
+          pessoas.forEach(pessoa => {
+            const option = document.createElement('option');
+            option.value = pessoa._id;
+            option.textContent = pessoa.nome;
+            dropdown.appendChild(option);
+          });
+        } catch (error) {
+          console.error('Erro ao listar pessoas:', error);
+          throw error;
+        }
+      }
+
     static async afterLogin() {
         const idUsuario = localStorage.getItem('id');
         comprimento();
@@ -461,4 +479,5 @@ document.addEventListener('DOMContentLoaded', () => {
     Controller.mostrarTodosCreditos();
     Controller.mostrarTodosDebitos();
     Controller.afterLogin();
+    Controller.listarPessoasDropDawn();
 });

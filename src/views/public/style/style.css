@@ -1,3 +1,4 @@
+
 html, body, header, main, footer {
     margin: 0;
     padding: 0;
@@ -156,7 +157,8 @@ tbody tr:nth-child(even) {
     font-weight: bold;
 }
 
-.input-group input {
+.input-group input, select {
+    margin-top: 0.5rem;
     box-sizing: border-box;
     width: 100%;
     padding: 10px 20px;
@@ -250,7 +252,30 @@ footer {
     margin-top: 14px;
     margin-left: 270px;
 }
-
+  
+  /* Estilizando as opções do dropdown */
+  #dropdown option {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Estilizando o dropdown quando estiver aberto */
+  #dropdown:focus {
+    outline: none;
+    border-color: #999;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Estilizando as opções do dropdown quando estiver aberto */
+  #dropdown:focus option {
+    background-color: #f0f0f0;
+  }
+  
+  /* Estilizando as opções do dropdown ao passar o mouse */
+  #dropdown option:hover {
+    background-color: #e0e0e0;
+  }
+  
 .down-icon.up {
     transform: rotate(180deg);
 }
