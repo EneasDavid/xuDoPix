@@ -388,16 +388,19 @@ class Controller {
     }
     
     static async listarPessoasDropDawn() {
+        const idUsuario = localStorage.getItem('id');
         try {
           const response = await axios.get('http://localhost:3000/pessoa');
           const pessoas = response.data;
           const dropdown = document.getElementById('dropdown');
           dropdown.innerHTML = '<option value="">Selecione um usuário</option>';
           pessoas.forEach(pessoa => {
-            const option = document.createElement('option');
-            option.value = pessoa._id;
-            option.textContent = pessoa.nome;
-            dropdown.appendChild(option);
+            if(pessoa._id!=idUsuario){
+                const option = document.createElement('option');
+                option.value = pessoa._id;
+                option.textContent = pessoa.nome;
+                dropdown.appendChild(option);    
+            }
           });
         } catch (error) {
           console.error('Erro ao listar pessoas:', error);
