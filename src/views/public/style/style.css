@@ -92,6 +92,7 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 750px;
     overflow-y: auto;
+    max-height: 200px;
     margin-top: 20px;
     float: right;
 }
@@ -106,6 +107,18 @@ main {
     margin-top: 20px;
     float: center;
     margin-bottom: 100px;
+}
+
+#table-container3 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 750px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    float: right;
 }
 
 table {
@@ -138,6 +151,19 @@ h2 {
 }
 
 #dynamic-table2 td.dados-adicionais {
+    font-weight: normal; 
+    font-size: 14px; 
+    color: #0c0c0c; 
+}
+
+#dynamic-table3 th {
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 16px; 
+}
+
+#dynamic-table3 td.dados-adicionais {
     font-weight: normal; 
     font-size: 14px; 
     color: #0c0c0c; 
