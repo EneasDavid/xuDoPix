@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Nova Dívida</title>
+    <link rel="stylesheet" href="/src/views/public/style/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 class="logo"><a href="/src/views/">Xu do Pix</a></h1>
+        </div>
+    </header>
+    <main>
+        <div class="forms-container">
+            <div class="title-container"><h2>CADASTRAR NOVA DIVIDA</h2></div>
+            <form action="#" method="POST" class="divida-form" id="divida-form">
+                <div class="input-group">
+                    <label for="valor">Valor da Dívida:</label>
+                    <input type="number" id="valor" required
+                    placeholder="Insira o valor da dívida">
+                </div>
+                <div class="input-group">
+                    <label>CPF do Devedor:</label>
+                    <input type="text" id="cpf" name="cpf" required placeholder="Insira aqui o CPF do Usuário Devedor">
+                </div>
+                <div class="input-group">
+                    <label>Prazo de Pagamento:</label>
+                    <input type="date" id="prazo" name="prazo" required placeholder="Insira a data">
+                </div>
+            </form>
+            <button type="submit">ENVIAR</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./public/js/conexaoAPI.js"></script>
+</body>
+</html>
