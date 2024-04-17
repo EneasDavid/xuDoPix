@@ -222,7 +222,7 @@ static async cadastrarDivida() {
                     row.appendChild(prazoCell);                
     
                     const situacaoCell = document.createElement('td');
-                    situacaoCell.textContent = divida.status ? 'Pago' : 'Devendo';
+                    situacaoCell.textContent = divida.status ? 'PAGA' : 'EM ABERTO';
                     row.appendChild(situacaoCell);
     
                     tableBody.appendChild(row);
@@ -346,7 +346,7 @@ static async cadastrarDivida() {
                     row.appendChild(prazoCell);                
     
                     const situacaoCell = document.createElement('td');
-                    situacaoCell.textContent = divida.status ? 'Pago' : 'Devendo';
+                    situacaoCell.textContent = divida.status ? 'PAGA' : 'EM ABERTO';
                     row.appendChild(situacaoCell);
     
                     tableBody.appendChild(row);
