@@ -29,6 +29,15 @@ class Controller {
         }
     }
 
+    static async mostrarDividaPorId(id){
+        try{
+            const divida=await axios.get(`http://localhost:3000/divida/${id}`);
+            return divida.data;
+        }catch(error){
+            console.error('Erro ao mostrar divida', error);
+        }
+    }
+
     static async listarPessoas() {
         try {
             const response = await axios.get('http://localhost:3000/pessoa');
@@ -129,9 +138,19 @@ class Controller {
     static async excluirDivida(id) {
         try {
             await axios.delete(`http://localhost:3000/divida/${id}`);
-            //await this.();
         } catch (error) {
             console.error('Erro ao excluir dívida:', error);
+        }
+    }
+
+    static async quitarDivida(id){
+        try{
+            const data = await this.mostrarDividaPorId(id);
+            data.status=true;
+            await axios.put(`http://localhost:3000/divida/${id}`, data);
+            await this.afterLogin();
+        }catch(error){
+            console.error('erro ao quitar divida', error);
         }
     }
 
@@ -169,14 +188,14 @@ class Controller {
         }
     }
 
-    static async mostrarDividas(id) {
+    static async mostrarDebitos(id) {
         const tableBody = document.getElementById('debito-lista');
         if(tableBody===null) return;
         tableBody.innerHTML = ''; 
         try {
             const dividas = await this.listarDividas();
             for (const divida of dividas) {
-                if (divida.id_devedor === id) {
+                if (divida.id_devedor === id && divida.status===false) {
                     const row = document.createElement('tr');
     
                     const valorCell = document.createElement('td');
@@ -213,7 +232,7 @@ class Controller {
         try {
             const dividas = await this.listarDividas();
             for (const divida of dividas) {
-                if (divida.id_fiador === id) {
+                if (divida.id_fiador === id && divida.status===false) {
                     const row = document.createElement('tr');
     
                     const valorCell = document.createElement('td');
@@ -234,9 +253,93 @@ class Controller {
                     const quitarCell = document.createElement('td');
                     const quitarButton = document.createElement('button');
                     quitarButton.textContent = 'QUITAR';
-                    quitarButton.addEventListener('click', () => this.excluirDivida(divida._id));
+                    quitarButton.addEventListener('click', () => this.quitarDivida(divida._id));
                     quitarCell.appendChild(quitarButton);
                     row.appendChild(quitarCell);
+    
+                    tableBody.appendChild(row);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao mostrar dívidas:', error);
+        }
+    }
+
+    static async mostrarTodosCreditos(){
+        const idUsuario = localStorage.getItem('id');
+        const tableBody = document.getElementById('todos-os-credito-lista');
+        if(tableBody===null) return;
+        tableBody.innerHTML = ''; 
+        try {
+            const dividas = await this.listarDividas();
+            for (const divida of dividas) {
+                if (divida.id_fiador === idUsuario) {
+                    const row = document.createElement('tr');
+    
+                    const valorCell = document.createElement('td');
+                    valorCell.textContent = divida.valor;
+                    row.appendChild(valorCell);
+    
+                    const devedorCell = document.createElement('td');
+                    const prazoData = new Date(divida.prazo);
+                    const prazoFormatado = prazoData.toLocaleDateString('pt-BR');
+                    devedorCell.textContent = prazoFormatado; 
+                    row.appendChild(devedorCell);
+    
+                    const prazoCell = document.createElement('td');
+                    const pessoa = await this.mostrarPessoaPorId(divida.id_devedor);
+                    prazoCell.textContent = pessoa.nome;
+                    row.appendChild(prazoCell);                
+
+                    const quitarCell = document.createElement('td');
+                    if (divida.status) {
+                        quitarCell.textContent = "ENCERRADA";
+                    } else {
+                        const quitarButton = document.createElement('button');
+                        quitarButton.textContent = 'QUITAR';
+                        quitarButton.addEventListener('click', () => this.quitarDivida(divida._id));
+                        quitarCell.appendChild(quitarButton);
+                    }
+                    row.appendChild(quitarCell);
+                    
+    
+                    tableBody.appendChild(row);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao mostrar dívidas:', error);
+        }
+    }
+
+    static async mostrarTodosDebitos(){
+        const idUsuario = localStorage.getItem('id');
+        const tableBody = document.getElementById('todos-os-debito-lista');
+        if(tableBody===null) return;
+        tableBody.innerHTML = ''; 
+        try {
+            const dividas = await this.listarDividas();
+            for (const divida of dividas) {
+                if (divida.id_devedor === idUsuario) {
+                    const row = document.createElement('tr');
+    
+                    const valorCell = document.createElement('td');
+                    valorCell.textContent = divida.valor;
+                    row.appendChild(valorCell);
+    
+                    const devedorCell = document.createElement('td');
+                    const prazoData = new Date(divida.prazo);
+                    const prazoFormatado = prazoData.toLocaleDateString('pt-BR');
+                    devedorCell.textContent = prazoFormatado; 
+                    row.appendChild(devedorCell);
+    
+                    const prazoCell = document.createElement('td');
+                    const fiadorNome = await this.mostrarPessoaPorId(divida.id_fiador);
+                    prazoCell.textContent = fiadorNome.nome;
+                    row.appendChild(prazoCell);                
+    
+                    const situacaoCell = document.createElement('td');
+                    situacaoCell.textContent = divida.status ? 'Pago' : 'Devendo';
+                    row.appendChild(situacaoCell);
     
                     tableBody.appendChild(row);
                 }
@@ -258,7 +361,6 @@ class Controller {
             throw error;
         }
     }
-
 
     static async editarPessoa() {
         const idUsuario = localStorage.getItem('id');
@@ -328,7 +430,7 @@ class Controller {
                     const editarButton = document.getElementById('editar');
                     editarButton.addEventListener('click', () => {window.location.href = './upDataUser.html';});                    
 
-                    await this.mostrarDividas(idUsuario);
+                    await this.mostrarDebitos(idUsuario);
                     await this.mostrarCreditos(idUsuario);
                                         
                 } else {
@@ -356,5 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Controller.cadastrarPessoa();
     Controller.editarPessoa();
     Controller.mostrarPessoas();
+    Controller.mostrarTodosCreditos();
+    Controller.mostrarTodosDebitos();
     Controller.afterLogin();
 });

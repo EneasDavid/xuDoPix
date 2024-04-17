@@ -27,8 +27,8 @@ class DividaController{
     static async listarDividaPorId(req,res){
         try{
             const id = req.params.id;
-            const dividas = await Divida.fin({ pessoa: id});
-            res.status(200).json(dividas);
+            const dividaEncontrada = await Divida.findById(id);
+            res.status(200).json(dividaEncontrada);
         }catch(erro){   
             res.status(500).json({message: `${erro.message} - Falha na listagem de dividas`}); 
         }
