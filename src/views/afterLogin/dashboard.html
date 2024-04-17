@@ -13,8 +13,8 @@
             <nav>
                 <ul>
                     <li><a href="#">NOVA DÍVIDA</a></li>
-                    <li><a href="#">QUITAR</a></li>
-                    <li><a href="#">DEBITOS</a></li>
+                    <li><a href="./creditoList.html">QUITAR</a></li>
+                    <li><a href="./dividasList.html">DEBITOS</a></li>
                     <li><a href="/src/views/">SAIR </a></li>
                 </ul>
             </nav>
@@ -22,7 +22,7 @@
     </header>
     <main>
         <div id="user-info">
-            <h2>Olá, usuário</h2>
+            <h2>Olá, <span id="nome-usuario"></span></h2>
         </div>
         <div id="table-container">
             <table id="dynamic-table">
@@ -35,14 +35,7 @@
                         <th>STATUS</th>
                     </tr>
                 </thead>
-                <tbody id="pessoas-lista">
-                    <tr>
-                        <td class="dados-adicionais">R$10,00</td>
-                        <td>17/04/2024</td>
-                        <td>LINBEL PEREIRA</td>
-                        <td>ABERTA</td>
-                    </tr>
-                </tbody>
+                <tbody id="debito-lista"></tbody>
             </table>
         </div>
         <div id="table-container">
@@ -53,21 +46,10 @@
                         <td>VALOR</td>
                         <td>PRAZO</td>
                         <td>DEVEDOR</td>
-                        <td>STATUS</td>
                         <td>QUITAR DÍVIDA</td>
                     </tr>
                 </thead>
-                <tbody id="pessoas-lista">
-                    <tr>
-                        <td class="dados-adicionais">R$1000,00</td>
-                        <td>17/04/2024</td>
-                        <td>LINBEL PEREIRA</td>
-                        <td>ABERTA</td>
-                        <td>
-                            <button type="submit">REMOVER</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="credito-lista"></tbody>
             </table>
         </div>
     </main>
