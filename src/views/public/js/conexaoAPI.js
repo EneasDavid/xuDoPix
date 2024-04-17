@@ -1,8 +1,3 @@
-function obterIdUsuario() {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    return urlSearchParams.get('id');
-}
-
 function comprimento() {
     const now = new Date();
     const hour = now.getHours();
@@ -160,12 +155,12 @@ class Controller {
                 senhaCell.textContent = pessoa.senha;
                 row.appendChild(senhaCell);
                 
-                const excluirCell = document.createElement('td');
-                const excluirButton = document.createElement('button');
-                excluirButton.textContent = 'Excluir';
-                excluirButton.addEventListener('click', () => this.excluirPessoa(pessoa._id));
-                excluirCell.appendChild(excluirButton);
-                row.appendChild(excluirCell);
+                const quitarCell = document.createElement('td');
+                const quitarButton = document.createElement('button');
+                quitarButton.textContent = 'Excluir';
+                quitarButton.addEventListener('click', () => this.excluirPessoa(pessoa._id));
+                quitarCell.appendChild(quitarButton);
+                row.appendChild(quitarCell);
                 
                 tableBody.appendChild(row);
             });
@@ -176,6 +171,7 @@ class Controller {
 
     static async mostrarDividas(id) {
         const tableBody = document.getElementById('debito-lista');
+        if(tableBody===null) return;
         tableBody.innerHTML = ''; 
         try {
             const dividas = await this.listarDividas();
@@ -212,6 +208,7 @@ class Controller {
     
     static async mostrarCreditos(id) {
         const tableBody = document.getElementById('credito-lista');
+        if(tableBody===null) return;
         tableBody.innerHTML = ''; 
         try {
             const dividas = await this.listarDividas();
@@ -234,12 +231,12 @@ class Controller {
                     prazoCell.textContent = pessoa.nome;
                     row.appendChild(prazoCell);                
     
-                    const excluirCell = document.createElement('td');
-                    const excluirButton = document.createElement('button');
-                    excluirButton.textContent = 'QUITAR';
-                    excluirButton.addEventListener('click', () => this.excluirDivida(divida._id));
-                    excluirCell.appendChild(excluirButton);
-                    row.appendChild(excluirCell);
+                    const quitarCell = document.createElement('td');
+                    const quitarButton = document.createElement('button');
+                    quitarButton.textContent = 'QUITAR';
+                    quitarButton.addEventListener('click', () => this.excluirDivida(divida._id));
+                    quitarCell.appendChild(quitarButton);
+                    row.appendChild(quitarCell);
     
                     tableBody.appendChild(row);
                 }
@@ -262,6 +259,32 @@ class Controller {
         }
     }
 
+
+    static async editarPessoa() {
+        const idUsuario = localStorage.getItem('id');
+        const pessoaData = await this.mostrarPessoaPorId(idUsuario);
+        document.getElementById('cpf').value = pessoaData.cpf;
+        document.getElementById('nome').value = pessoaData.nome;
+        document.getElementById('senha').value = pessoaData.senha;
+    
+        document.getElementById('editar-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('editar-form'));
+            const data = {
+                cpf: formData.get('cpf'),
+                nome: formData.get('nome'),
+                senha: formData.get('senha')
+            };
+            try {
+                await axios.put(`http://localhost:3000/pessoa/${idUsuario}`, data);
+                window.location.href = "./dashboard.html";
+            } catch (error) {
+                console.error('Erro ao editar usuário:', error);
+                alert('Erro ao editar usuário. Por favor, tente novamente mais tarde.');
+            }
+        });
+    }
+    
     static async afterLogin() {
         const idUsuario = localStorage.getItem('id');
         comprimento();
@@ -275,8 +298,7 @@ class Controller {
                     }
                     const dividasAtivas = await this.contarDividasAtivas(idUsuario);
                     const quantidadeDividasAtivas = dividasAtivas.length;
-                    console.log(quantidadeDividasAtivas);
-                    // Calcular saldo positivo e negativo com base nas dívidas
+    
                     let saldoPositivo = 0;
                     let saldoNegativo = 0;
     
@@ -292,19 +314,23 @@ class Controller {
                     const elementoDividasAtivas = document.getElementById('dividas-ativas');
                     const elementoSaldoPositivo = document.getElementById('saldo-positivo');
                     const elementoSaldoNegativo = document.getElementById('saldo-negativo');
-
+    
                     elementoCPF.textContent = `CPF: ${pessoa.cpf}`;
     
                     if (elementoDividasAtivas) elementoDividasAtivas.textContent = `Dívidas Ativas: ${quantidadeDividasAtivas}`;
                     else elementoDividasAtivas.textContent = `Dívidas Ativas: 0`;
     
-                    if (elementoSaldoPositivo) elementoSaldoPositivo.textContent = `Saldo Positivo: R$ ${saldoPositivo.toFixed(2)}`;
+                    if (elementoSaldoPositivo) elementoSaldoPositivo.textContent = `Saldo Positivo: + R$ ${saldoPositivo.toFixed(2)}`;
                     else elementoSaldoPositivo.textContent = `Saldo Positivo: R$ 0,00`;
-                    if (elementoSaldoNegativo) elementoSaldoNegativo.textContent = `Saldo Negativo: R$ ${saldoNegativo.toFixed(2)}`;
+                    if (elementoSaldoNegativo) elementoSaldoNegativo.textContent = `Saldo Negativo: - R$ ${saldoNegativo.toFixed(2)}`;
                     else elementoSaldoNegativo.textContent = `Saldo Negativo: R$ 0,00`;
     
+                    const editarButton = document.getElementById('editar');
+                    editarButton.addEventListener('click', () => {window.location.href = './upDataUser.html';});                    
+
                     await this.mostrarDividas(idUsuario);
                     await this.mostrarCreditos(idUsuario);
+                                        
                 } else {
                     console.error('Erro: pessoa não encontrada ou nome não disponível.');
                 }
@@ -314,6 +340,13 @@ class Controller {
         } else {
             console.error('Erro: ID do usuário não encontrado na URL.');
         }
+    
+        document.getElementById("user-info").addEventListener("click", function() {
+            var infoContainer = this.querySelector(".info-container");
+            var downIcon = this.querySelector(".down-icon");
+            infoContainer.classList.toggle("active");
+            downIcon.classList.toggle("up");
+        });
     }
     
 }
@@ -321,6 +354,7 @@ class Controller {
 document.addEventListener('DOMContentLoaded', () => {
     Controller.fazerLogin();
     Controller.cadastrarPessoa();
+    Controller.editarPessoa();
     Controller.mostrarPessoas();
     Controller.afterLogin();
 });

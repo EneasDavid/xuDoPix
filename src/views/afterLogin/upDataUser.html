@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Editar usuario</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css"
      integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A=="
      crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -37,42 +37,34 @@
                 <p id="dividas-ativas"></p>
                 <p id="saldo-positivo"></p>
                 <p id="saldo-negativo"></p>
-                <button id="editar">EDITAR</button>
             </div>
         </div>
-        <div id="table-container">
-            <table id="dynamic-table">
-                <thead>
-                    <h2>SUAS DÍVIDAS</h2>
-                    <tr>
-                        <th>VALOR</th>
-                        <th>PRAZO</th>
-                        <th>CREDOR</th>
-                        <th>STATUS</th>
-                    </tr>
-                </thead>
-                <tbody id="debito-lista"></tbody>
-            </table>
+    <div class="forms-container">
+        <div class="title-container">
+            <h1>EDITAR</h1>
         </div>
-        <div id="table-container">
-            <table id="dynamic-table">
-                <thead>
-                    <h2>SEUS CRÉDITOS</h2>
-                    <tr>
-                        <td>VALOR</td>
-                        <td>PRAZO</td>
-                        <td>DEVEDOR</td>
-                        <td>QUITAR DÍVIDA</td>
-                    </tr>
-                </thead>
-                <tbody id="credito-lista"></tbody>
-            </table>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../public/js/conexaoAPI.js"></script>
+        <form action="#" method="POST" class="cadastro-form" id="editar-form">
+            <div class="input-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="Insira no formato - 123.456.789-00">
+            </div>
+            <div class="input-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required placeholder="Seu nome aqui">
+            </div>
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required minlength="6" placeholder="Pelo menos 6 caracteres">
+            </div>
+            <button type="submit">EDITAR</button>
+        </form>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2024 Xu do Pix. Todos os direitos reservados.</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../public/js/conexaoAPI.js"></script>
 </body>
 </html>
+

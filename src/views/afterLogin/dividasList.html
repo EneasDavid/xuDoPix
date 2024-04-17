@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debitos</title>
     <link rel="stylesheet" href="/src/views/public/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css"
+    integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css"
+    integrity="sha512-tk4nGrLxft4l30r9ETuejLU0a3d7LwMzj0eXjzc16JQj+5U1IeVoCuGLObRDc3+eQMUcEQY1RIDPGvuA7SNQ2w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+   <link rel="stylesheet" href="/src/views/public/style/style.css">
 </head>
 <body>
     <header>
@@ -22,7 +29,18 @@
     </header>
     <main>
         <div id="user-info">
-            <h2 id="greeting"><span id="nome-usuario"></span></h2>
+            <span class="more-info-icon">
+                <i class="fas fa-sort-down down-icon"></i>
+                <h2 id="greeting"><span id="nome-usuario"></span></h2>
+            </span>
+            <div class="info-container" ><br>
+                <p id="cpf-usuario"></p>
+                <p id="dividas-ativas"></p>
+                <p id="saldo-positivo"></p>
+                <p id="saldo-negativo"></p>
+                <button id="editar">EDITAR</button>
+
+            </div>
         </div>
             <div id="table-container">
             <table id="dynamic-table">
@@ -35,7 +53,7 @@
                         <th>CREDOR</th>
                     </tr>
                 </thead>
-                <tbody id="dividas-lista"></tbody>
+                <tbody id="debito-lista"></tbody>
             </table>
         </div>
     </main>
