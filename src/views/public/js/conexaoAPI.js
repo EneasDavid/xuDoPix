@@ -3,6 +3,26 @@ function obterIdUsuario() {
     return urlSearchParams.get('id');
 }
 
+function comprimento() {
+    const now = new Date();
+    const hour = now.getHours();
+    let greeting;
+    if (hour >= 5 && hour < 12) {
+        greeting = 'Bom dia, ';
+    } else if (hour >= 12 && hour < 18) {
+        greeting = 'Boa tarde, ';
+    } else {
+        greeting = 'Boa noite, ';
+    }
+    
+    const elementoSaudacao = document.getElementById('greeting');
+    elementoSaudacao.textContent = greeting;
+
+    const spanNomeUsuario = document.createElement('span');
+    spanNomeUsuario.id = 'nome-usuario';
+    elementoSaudacao.appendChild(spanNomeUsuario);
+}
+
 class Controller {
          
     static async mostrarPessoaPorId(id) {
@@ -48,8 +68,8 @@ class Controller {
                 const pessoa = pessoas.find(p => p.cpf === data.cpf);
                 if (pessoa) {
                     if (pessoa.senha === data.senha) {
-                        console.log('Login bem-sucedido:', pessoa);
-                        window.location.href = `/src/views/afterLogin/dashboard.html?id=${pessoa._id}`;
+                        window.location.href = `/src/views/afterLogin/dashboard.html`;
+                        localStorage.setItem('id', pessoa._id); // Correção: armazenando o ID do usuário no localStorage
                         await this.afterLogin();
                     } else alert('CPF ou senha incorretos. Por favor, tente novamente.');
                 } else alert('CPF ou senha incorretos. Por favor, tente novamente.');
@@ -154,14 +174,13 @@ class Controller {
         }
     }
 
-    static async mostrarDividas() {
+    static async mostrarDividas(id) {
         const tableBody = document.getElementById('debito-lista');
         tableBody.innerHTML = ''; 
         try {
             const dividas = await this.listarDividas();
-            const idUsuario = obterIdUsuario();
             for (const divida of dividas) {
-                if (divida.id_devedor === idUsuario) {
+                if (divida.id_devedor === id) {
                     const row = document.createElement('tr');
     
                     const valorCell = document.createElement('td');
@@ -191,14 +210,13 @@ class Controller {
         }
     }
     
-    static async mostrarCreditos() {
+    static async mostrarCreditos(id) {
         const tableBody = document.getElementById('credito-lista');
         tableBody.innerHTML = ''; 
         try {
             const dividas = await this.listarDividas();
-            const idUsuario = obterIdUsuario();
             for (const divida of dividas) {
-                if (divida.id_fiador === idUsuario) {
+                if (divida.id_fiador === id) {
                     const row = document.createElement('tr');
     
                     const valorCell = document.createElement('td');
@@ -231,8 +249,22 @@ class Controller {
         }
     }
 
+    static async contarDividasAtivas(idUsuario) {
+        try {
+            const dividas = await this.listarDividas();
+            const dividasAtivas = dividas.filter(divida => {
+                return (divida.id_devedor === idUsuario || divida.id_fiador === idUsuario) && !divida.status;
+            });
+            return dividasAtivas;
+        } catch (error) {
+            console.error('Erro ao contar dívidas ativas:', error);
+            throw error;
+        }
+    }
+
     static async afterLogin() {
-        const idUsuario = obterIdUsuario();
+        const idUsuario = localStorage.getItem('id');
+        comprimento();
         if (idUsuario) {
             try {
                 const pessoa = await this.mostrarPessoaPorId(idUsuario);
@@ -241,14 +273,49 @@ class Controller {
                     if (elementoNomeUsuario) {
                         elementoNomeUsuario.textContent = pessoa.nome;
                     }
-                    await this.mostrarDividas();
-                    await this.mostrarCreditos();
-                } else console.error('Erro: pessoa não encontrada ou nome não disponível.');
+                    const dividasAtivas = await this.contarDividasAtivas(idUsuario);
+                    const quantidadeDividasAtivas = dividasAtivas.length;
+                    console.log(quantidadeDividasAtivas);
+                    // Calcular saldo positivo e negativo com base nas dívidas
+                    let saldoPositivo = 0;
+                    let saldoNegativo = 0;
+    
+                    for (const divida of dividasAtivas) {
+                        if (divida.id_fiador === idUsuario) {
+                            saldoPositivo += divida.valor;
+                        } else if (divida.id_devedor === idUsuario) {
+                            saldoNegativo += divida.valor;
+                        }
+                    }
+    
+                    const elementoCPF = document.getElementById('cpf-usuario');
+                    const elementoDividasAtivas = document.getElementById('dividas-ativas');
+                    const elementoSaldoPositivo = document.getElementById('saldo-positivo');
+                    const elementoSaldoNegativo = document.getElementById('saldo-negativo');
+
+                    elementoCPF.textContent = `CPF: ${pessoa.cpf}`;
+    
+                    if (elementoDividasAtivas) elementoDividasAtivas.textContent = `Dívidas Ativas: ${quantidadeDividasAtivas}`;
+                    else elementoDividasAtivas.textContent = `Dívidas Ativas: 0`;
+    
+                    if (elementoSaldoPositivo) elementoSaldoPositivo.textContent = `Saldo Positivo: R$ ${saldoPositivo.toFixed(2)}`;
+                    else elementoSaldoPositivo.textContent = `Saldo Positivo: R$ 0,00`;
+                    if (elementoSaldoNegativo) elementoSaldoNegativo.textContent = `Saldo Negativo: R$ ${saldoNegativo.toFixed(2)}`;
+                    else elementoSaldoNegativo.textContent = `Saldo Negativo: R$ 0,00`;
+    
+                    await this.mostrarDividas(idUsuario);
+                    await this.mostrarCreditos(idUsuario);
+                } else {
+                    console.error('Erro: pessoa não encontrada ou nome não disponível.');
+                }
             } catch (error) {
                 console.error('Erro ao obter informações da pessoa:', error);
             }
-        } else console.error('Erro: ID do usuário não encontrado na URL.');
-    }  
+        } else {
+            console.error('Erro: ID do usuário não encontrado na URL.');
+        }
+    }
+    
 }
 
 document.addEventListener('DOMContentLoaded', () => {
