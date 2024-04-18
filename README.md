@@ -18,6 +18,7 @@ O objetivo deste projeto é desenvolver um sistema de gestão de dívidas utiliz
 ### Funcionalidades Previstas
 > Este projeto consiste na criação e integração de uma API desenvolvida em Node.js e MongoDB para auxiliar operações CRUD (Create, Read, Update, Delete) nas entidades de Pessoa e Dívida.
 > - Pessoa
+
 |ATRIBUTO|DESCRIÇÃO|TIPO|
 | -------| --------------------- | --------- |
 |id |  Identificador único da pessoa | (ObjectID) |
@@ -26,6 +27,7 @@ O objetivo deste projeto é desenvolver um sistema de gestão de dívidas utiliz
 |senha |  Senha da pessoa para autenticação | (String, obrigatório) |
 
 > - Divida 
+
 |ATRIBUTO|DESCRIÇÃO|TIPO|
 | -------| --------------------- | --------- |
 |id | Identificador único da dívida | (ObjectID) |
