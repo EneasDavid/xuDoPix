@@ -1,7 +1,7 @@
 {
   "name": "xudopix",
   "version": "1.0.0",
-  "description": "|Participantes|Curso|Função no porjeto| | -------| --------------------- | --------- | |Enéas |  Ciência da computaçao | Back End | |Mariah |  Engenharia da Ciência | Database Administrator | |Gustavo |  Engenharia da Ciência | Quality Assurance Analyst |",
+  "description": "Criação de API em nodeJS para auxiliar no CRUD",
   "main": "index.js",
   "type": "module",
   "scripts": {
