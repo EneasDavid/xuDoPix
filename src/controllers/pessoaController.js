@@ -52,11 +52,12 @@ class PessoaController{
         try {
             const id = req.params.id;
             await Pessoa.findByIdAndDelete(id);            
-            res.status(200).json({ message: "Usuário deletado" });
+            res.status(200).json({ message: "Usuário deletado junto com suas dívidas" });
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Erro ao deletar usuário` });
+            res.status(500).json({ message: `${error.message} - Erro ao deletar usuário e suas dívidas` });
         }
     }
+    
     
     
 }

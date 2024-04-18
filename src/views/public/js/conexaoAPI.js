@@ -104,7 +104,7 @@ class Controller {
         });
     }
 
-static async cadastrarDivida() {
+    static async cadastrarDivida() {
     const idUsuario = localStorage.getItem('id');
     let devedorId = null;
 
@@ -123,7 +123,6 @@ static async cadastrarDivida() {
             status: 'false', 
             dataCriacao:new Date(),
         };
-        console.log(data);
         try {
             await axios.post('http://localhost:3000/divida', data);
             window.location.href = "/src/views/afterLogin/dashboard.html";
@@ -146,6 +145,7 @@ static async cadastrarDivida() {
     static async excluirDivida(id) {
         try {
             await axios.delete(`http://localhost:3000/divida/${id}`);
+            await this.mostrarDividas();
         } catch (error) {
             console.error('Erro ao excluir dívida:', error);
         }
@@ -195,6 +195,77 @@ static async cadastrarDivida() {
             console.error('Erro ao mostrar pessoas:', error);
         }
     }
+
+    static async mostrarDividas() {
+        const tableBody = document.getElementById('todos-os-lista');
+        if (tableBody === null) return;
+        tableBody.innerHTML = '';
+        try {
+            const dividas = await this.listarDividas();
+            if (dividas.length === 0) {
+                const noDataRow = document.createElement('tr');
+                const noDataCell = document.createElement('td');
+                noDataCell.textContent = 'Nenhum dado encontrado';
+                noDataCell.colSpan = 6; // Colspan igual ao número de colunas na tabela
+                noDataRow.appendChild(noDataCell);
+                tableBody.appendChild(noDataRow);
+            } else {
+                for (const divida of dividas) {
+                    const row = document.createElement('tr');
+    
+                    const valorCell = document.createElement('td');
+                    valorCell.textContent = divida.valor;
+                    row.appendChild(valorCell);
+    
+                    const fiadorCell = document.createElement('td');
+                    const fiador = await this.mostrarPessoaPorId(divida.id_fiador);
+                    fiadorCell.textContent = fiador ? fiador.nome : 'Dado não encontrado';
+                    row.appendChild(fiadorCell);
+    
+                    const devedorCell = document.createElement('td');
+                    const devedor = await this.mostrarPessoaPorId(divida.id_devedor);
+                    devedorCell.textContent = devedor ? devedor.nome : 'Dado não encontrado';
+                    row.appendChild(devedorCell);
+    
+                    const prazoCell = document.createElement('td');
+                    const prazoData = new Date(divida.prazo);
+                    const prazoFormatado = prazoData.toLocaleDateString('pt-BR');
+                    prazoCell.textContent = prazoFormatado;
+                    row.appendChild(prazoCell);
+    
+                    const quitarCell = document.createElement('td');
+                    if (divida.status) {
+                        quitarCell.textContent = "ENCERRADA";
+                    } else {
+                        const quitarButton = document.createElement('button');
+                        quitarButton.textContent = 'QUITAR';
+                        quitarButton.addEventListener('click', () => this.quitarDivida(divida._id));
+                        quitarCell.appendChild(quitarButton);
+                    }
+                    row.appendChild(quitarCell);
+    
+                    const excluirCell = document.createElement('td');
+                    const excluirButton = document.createElement('button');
+                    excluirButton.textContent = 'Excluir';
+                    excluirButton.addEventListener('click', () => this.excluirDivida(divida._id));
+                    excluirCell.appendChild(excluirButton);
+                    row.appendChild(excluirCell);
+    
+                    tableBody.appendChild(row);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao mostrar dívidas:', error);
+            // Em caso de erro, preenche o td com uma mensagem de erro
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.textContent = 'Erro ao carregar dados';
+            errorCell.colSpan = 6; // Colspan igual ao número de colunas na tabela
+            errorRow.appendChild(errorCell);
+            tableBody.appendChild(errorRow);
+        }
+    }
+       
 
     static async mostrarDebitos(id) {
         const tableBody = document.getElementById('debito-lista');
@@ -295,6 +366,7 @@ static async cadastrarDivida() {
                     row.appendChild(devedorCell);
     
                     const prazoCell = document.createElement('td');
+                    console.log(divida.id_devedor);
                     const pessoa = await this.mostrarPessoaPorId(divida.id_devedor);
                     prazoCell.textContent = pessoa.nome;
                     row.appendChild(prazoCell);                
@@ -369,6 +441,7 @@ static async cadastrarDivida() {
             throw error;
         }
     }
+    
 
     static async editarPessoa() {
         const idUsuario = localStorage.getItem('id');
@@ -491,5 +564,6 @@ document.addEventListener('DOMContentLoaded', () => {
     Controller.mostrarTodosCreditos();
     Controller.mostrarTodosDebitos();
     Controller.afterLogin();
+    Controller.mostrarDividas();
     Controller.listarPessoasDropDawn();
 });
