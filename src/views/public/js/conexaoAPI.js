@@ -105,32 +105,32 @@ class Controller {
     }
 
     static async cadastrarDivida() {
-    const idUsuario = localStorage.getItem('id');
-    let devedorId = null;
+        const idUsuario = localStorage.getItem('id');
+        let devedorId = null;
 
-    document.getElementById('devedor').addEventListener('change', (event) => {
-        devedorId = event.target.value;
-    });
+        document.getElementById('devedor').addEventListener('change', (event) => {
+            devedorId = event.target.value;
+        });
 
-    document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(document.getElementById('cadastro-divida-form'));
-        const data = {
-            id_devedor: devedorId,
-            id_fiador: idUsuario,
-            valor:  parseFloat(formData.get('valor')),
-            prazo: formData.get('prazo'),
-            status: 'false', 
-            dataCriacao:new Date(),
-        };
-        try {
-            await axios.post('http://localhost:3000/divida', data);
-            window.location.href = "/src/views/afterLogin/dashboard.html";
-        } catch (error) {
-            console.error('Erro ao cadastrar dívida:', error);
-            alert('Erro ao cadastrar dívida. Por favor, tente novamente mais tarde.');
-        }
-    });
+        document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('cadastro-divida-form'));
+            const data = {
+                id_devedor: devedorId,
+                id_fiador: idUsuario,
+                valor:  parseFloat(formData.get('valor')),
+                prazo: formData.get('prazo'),
+                status: 'false', 
+                dataCriacao:new Date(),
+            };
+            try {
+                await axios.post('http://localhost:3000/divida', data);
+                window.location.href = "/src/views/afterLogin/dashboard.html";
+            } catch (error) {
+                console.error('Erro ao cadastrar dívida:', error);
+                alert('Erro ao cadastrar dívida. Por favor, tente novamente mais tarde.');
+            }
+        });
     }    
 
     static async excluirPessoa(id) {
@@ -162,15 +162,12 @@ class Controller {
         }
     }
 
-    static async editarDivida(idDivida) {
-        try {
-            window.location.href = "./editDivida.html";
-
+    static async editarDivida() {
+        try{
+            const idDivida = localStorage.getItem('idDivida');
             const dividaData = await this.mostrarDividaPorId(idDivida);
 
             document.getElementById('valor').value = dividaData.valor;
-            document.getElementById('prazo').value = dividaData.prazo;
-            
             let devedorId = dividaData.id_devedor; 
             
             document.getElementById('devedor').addEventListener('change', (event) => {
@@ -193,12 +190,10 @@ class Controller {
                     window.location.href = "./dashboard.html";
                 } catch (error) {
                     console.error('Erro ao editar dívida:', error);
-                    alert('Erro ao editar dívida. Por favor, tente novamente mais tarde.');
                 }
             });
         } catch (error) {
             console.error('Erro ao carregar dados da dívida para edição:', error);
-            alert('Erro ao carregar dados da dívida para edição. Por favor, tente novamente mais tarde.');
         }
     }
     
@@ -452,7 +447,10 @@ class Controller {
                     if (!divida.status){
                         const editarButton = document.createElement('button');
                         editarButton.textContent = 'Editar';
-                        editarButton.addEventListener('click', () => this.editarDivida(divida._id));
+                        editarButton.addEventListener('click', () => {
+                            window.location.href = "./editDivida.html";
+                            localStorage.setItem('idDivida', divida._id);
+                        });
                         editarCell.appendChild(editarButton);
                     }else{
                         editarCell.textContent = 'Indisponivel';
@@ -641,4 +639,5 @@ document.addEventListener('DOMContentLoaded', () => {
     Controller.afterLogin();
     Controller.mostrarDividas();
     Controller.listarPessoasDropDawn();
+    Controller.editarDivida();
 });
