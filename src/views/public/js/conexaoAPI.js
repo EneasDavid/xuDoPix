@@ -162,6 +162,75 @@ class Controller {
         }
     }
 
+    static async editarDivida(idDivida) {
+        try {
+            window.location.href = "./editDivida.html";
+
+            const dividaData = await this.mostrarDividaPorId(idDivida);
+
+            document.getElementById('valor').value = dividaData.valor;
+            document.getElementById('prazo').value = dividaData.prazo;
+            
+            let devedorId = dividaData.id_devedor; 
+            
+            document.getElementById('devedor').addEventListener('change', (event) => {
+                devedorId = event.target.value;
+            });
+    
+            document.getElementById('editar-divida-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(document.getElementById('editar-divida-form'));
+                const data = {
+                    id_devedor: devedorId,
+                    id_fiador: localStorage.getItem('id'),
+                    valor: parseFloat(formData.get('valor')),
+                    prazo: formData.get('prazo'),
+                    status: dividaData.status,
+                    dataCriacao: new Date(),
+                };
+                try {
+                    await axios.put(`http://localhost:3000/divida/${idDivida}`, data);
+                    window.location.href = "./dashboard.html";
+                } catch (error) {
+                    console.error('Erro ao editar dívida:', error);
+                    alert('Erro ao editar dívida. Por favor, tente novamente mais tarde.');
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao carregar dados da dívida para edição:', error);
+            alert('Erro ao carregar dados da dívida para edição. Por favor, tente novamente mais tarde.');
+        }
+    }
+    
+    static async cadastrarDivida() {
+        const idUsuario = localStorage.getItem('id');
+        let devedorId = null;
+    
+        document.getElementById('devedor').addEventListener('change', (event) => {
+            devedorId = event.target.value;
+        });
+    
+        document.getElementById('cadastro-divida-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('cadastro-divida-form'));
+            const data = {
+                id_devedor: devedorId,
+                id_fiador: idUsuario,
+                valor: parseFloat(formData.get('valor')),
+                prazo: formData.get('prazo'),
+                status: 'false', 
+                dataCriacao: new Date(),
+            };
+            try {
+                await axios.post('http://localhost:3000/divida', data);
+                window.location.href = "/src/views/afterLogin/dashboard.html";
+            } catch (error) {
+                console.error('Erro ao cadastrar dívida:', error);
+                alert('Erro ao cadastrar dívida. Por favor, tente novamente mais tarde.');
+            }
+        });
+    }
+    
     static async mostrarPessoas() {
         const tableBody = document.getElementById('pessoas-lista');
         tableBody.innerHTML = ''; // Limpa a tabela antes de adicionar os dados
@@ -266,7 +335,6 @@ class Controller {
         }
     }
        
-
     static async mostrarDebitos(id) {
         const tableBody = document.getElementById('debito-lista');
         if(tableBody===null) return;
@@ -335,7 +403,7 @@ class Controller {
                     quitarButton.addEventListener('click', () => this.quitarDivida(divida._id));
                     quitarCell.appendChild(quitarButton);
                     row.appendChild(quitarCell);
-    
+
                     tableBody.appendChild(row);
                 }
             }
@@ -366,7 +434,6 @@ class Controller {
                     row.appendChild(devedorCell);
     
                     const prazoCell = document.createElement('td');
-                    console.log(divida.id_devedor);
                     const pessoa = await this.mostrarPessoaPorId(divida.id_devedor);
                     prazoCell.textContent = pessoa.nome;
                     row.appendChild(prazoCell);                
@@ -381,8 +448,17 @@ class Controller {
                         quitarCell.appendChild(quitarButton);
                     }
                     row.appendChild(quitarCell);
+                    const editarCell = document.createElement('td');
+                    if (!divida.status){
+                        const editarButton = document.createElement('button');
+                        editarButton.textContent = 'Editar';
+                        editarButton.addEventListener('click', () => this.editarDivida(divida._id));
+                        editarCell.appendChild(editarButton);
+                    }else{
+                        editarCell.textContent = 'Indisponivel';
+                    }
+                    row.appendChild(editarCell);
                     
-    
                     tableBody.appendChild(row);
                 }
             }
@@ -441,7 +517,6 @@ class Controller {
             throw error;
         }
     }
-    
 
     static async editarPessoa() {
         const idUsuario = localStorage.getItem('id');
